@@ -28,6 +28,22 @@ describe('Babel Inline Import - Plugin', () => {
 
         expect(transformedCode.code).to.equal(`/* babel-plugin-inline-import './fixtures/${filename}' */var SomeExample = '${base64data}';`);
       });
+
+      it('transforms the require statements into a var w/ the intended content', () => {
+        const transformedCode = babel.transform(`const SomeExample = require('./fixtures/${filename}');`, {
+          filename: __filename,
+          plugins: [[
+            BabelInlineImportDataURI, {
+              extensions: [
+                '.svg',
+                '.png',
+              ]
+            }
+          ]]
+        });
+
+        expect(transformedCode.code).to.equal(`var SomeExample = '${base64data}';`);
+      })
     });
 
     it('accepts different extensions', () => {
