@@ -4,7 +4,7 @@ import BabelInlineImportHelper from './helper';
 function toDataURI(givenPath, reference) {
   const buffer = BabelInlineImportHelper.getContents(givenPath, reference);
   const mimeType = mime.lookup(givenPath) || 'application/octet-stream';
-  return `data:${mimeType};base64,` + buffer.toString('base64');
+  return `data:${mimeType};utf8,` + buffer.toString('utf8');
 }
 
 export default function ({ types: t }) {
